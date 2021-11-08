@@ -11,7 +11,13 @@ import { UserContext } from '../../App';
 
 
 const firebaseConfig = {
- 
+//  put config here
+//  put config here
+//  put config here
+//  put config here
+//  put config here
+//  put config here
+
 };
 
 const app = initializeApp(firebaseConfig);
