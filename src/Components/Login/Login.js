@@ -8,16 +8,16 @@ import { updateProfile } from "firebase/auth";
 import { FacebookAuthProvider } from "firebase/auth";
 import { useContext } from 'react';
 import { UserContext } from '../../App';
+import { useHistory, useLocation } from 'react-router';
 
 
 const firebaseConfig = {
-//  put config here
-//  put config here
-//  put config here
-//  put config here
-//  put config here
-//  put config here
-
+  apiKey: "AIzaSyDlRLzJlgpGV3OkMhff-IybKtpDQnLqJhM",
+  authDomain: "like-button-eefc3.firebaseapp.com",
+  projectId: "like-button-eefc3",
+  storageBucket: "like-button-eefc3.appspot.com",
+  messagingSenderId: "155228903209",
+  appId: "1:155228903209:web:78dbb4298e1c11054c8938"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -37,6 +37,9 @@ const Login=()=> {
   })
 
   const [loggedInUser,setLoggedInUser]=useContext(UserContext);
+  const history=useHistory();
+  const location=useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
 
 const handleSignIn=()=>{
   const auth = getAuth();
@@ -163,6 +166,7 @@ const handleSignOut=()=>{
                 newUserInfo.success=true;
                 setUser(newUserInfo);
                 setLoggedInUser(newUserInfo);
+                history.replace(from);
                 console.log(res.user)
               })
               .catch((error) => {

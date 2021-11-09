@@ -6,6 +6,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
   Link
 } from "react-router-dom";
 import Review from './Components/Review/Review';
@@ -17,15 +18,15 @@ import Login from './Components/Login/Login';
 import { useState } from 'react/cjs/react.development';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
-export const UserContext=createContext()
+export const UserContext=createContext();
 
 function App() {
-  const [loggedInUser,setLoggedInUser]=useState([])
+  const [loggedInUser,setLoggedInUser]=useState({})
   return (
     <UserContext.Provider value={[loggedInUser,setLoggedInUser]}>
       <h1>email:{loggedInUser.email}</h1>
-      <Header></Header>
       <Router>
+         <Header></Header> {/*Component er bitore Link use korle oi sob component Route er bitore ante hoi */}
         <Switch>
         <Route exact path="/">
             <Shop></Shop>
@@ -39,8 +40,8 @@ function App() {
           <PrivateRoute path="/inventory">
             <Inventory></Inventory>
           </PrivateRoute>
-          <PrivateRoute  path="/shipping">
-            <Shipping></Shipping>
+          <PrivateRoute exact path="/shipping">
+             <Shipping></Shipping> 
           </PrivateRoute>
 
           <Route path="/login">
