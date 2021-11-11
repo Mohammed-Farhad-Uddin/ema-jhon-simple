@@ -27,9 +27,6 @@ export const handleGoogleSignIn=()=>{
         success:true
       }
       return signInUser;
-  
-      console.log(res)//signInUser howar por res ki hobe
-      console.log(displayName,email,photoURL);
     }).catch((err)=>console.log(err))
   }
 
