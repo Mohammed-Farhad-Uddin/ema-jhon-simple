@@ -3,7 +3,7 @@ import 'firebase/auth';
 import { useContext } from 'react';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
-import { handleGoogleSignIn, initializeLoginFramework , handleSignOut, handleFbSignIn, AcreateUserWithEmailAndPassword, AsignInWithEmailAndPassword} from './LoginFirebaseManager';
+import { handleGoogleSignIn, initializeLoginFramework , handleSignOut, handleFbSignIn, AcreateUserWithEmailAndPassword, AsignInWithEmailAndPassword, resetPassword} from './LoginFirebaseManager';
 
 
 
@@ -143,6 +143,7 @@ const Login=()=> {
         <input type="password" onChange={handleChange} name="password" id="" placeholder="Enter your password" required /> <br />
         <input type="submit" value={newUser?"Sign Up":"Sign In"} />
       </form>
+        <button onClick={()=>resetPassword(user.email)}>Forget Password</button>
       <p style={{color:'red'}}>{user.error}</p>
       {user.success && <p style={{color:'Green'}}> User {newUser? 'Sign In' : "Log In"} successfuly</p>}
     </div>

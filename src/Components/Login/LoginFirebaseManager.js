@@ -6,6 +6,8 @@ import { signOut } from "firebase/auth";
 import { createUserWithEmailAndPassword , signInWithEmailAndPassword } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
 import { FacebookAuthProvider } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 
 export const initializeLoginFramework=()=>{
@@ -81,7 +83,8 @@ export const handleSignOut=()=>{
                 const newUserInfo=res.user;
                 newUserInfo.error='';
                 newUserInfo.success=true;
-                updateUserInfo(name)
+                updateUserInfo(name);
+                verifyEmail();
                 // console.log(res.user)
                 return newUserInfo
             })
@@ -132,3 +135,30 @@ const updateUserInfo=(name)=>{
       console.log(error)
     });
   }
+
+  
+
+const verifyEmail=()=>{
+  const auth = getAuth();
+  sendEmailVerification(auth.currentUser)
+    .then(() => {
+      // Email verification sent!
+      // ...
+    });
+}
+
+
+
+export const resetPassword=(email)=>{
+  const auth = getAuth();
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      // Password reset email sent!
+      // ..
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+}
