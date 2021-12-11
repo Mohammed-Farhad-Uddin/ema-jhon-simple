@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './Shop.css'
-import fakeData from '../../fakeData'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
 import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
@@ -8,22 +7,42 @@ import { Link } from 'react-router-dom';
 
 const Shop = () => {
     // console.log(fakeData)
-    const first10 = fakeData.slice(0, 10);
-    const [products, setProducts] = useState(first10);
+    // const first10 = fakeData.slice(0, 10);
+    const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+
+    useEffect(()=>{
+        fetch('http://localhost:5000/products')
+        .then(res=>res.json())
+        .then(data=>setProducts(data))
+    },[])
 
     useEffect(() => {
         const saveCart = getDatabaseCart()
         const productKeys = Object.keys(saveCart);
-        // console.log(productKeys)
-        const previousCart = productKeys.map((existingKey) => {
-            const product = fakeData.find((pd) => pd.key == existingKey)
-            // console.log(existingKey,saveCart[existingKey]);
-            product.quantity = saveCart[existingKey]
-            return product
+        // console.log(products,productKeys)
+        fetch('http://localhost:5000/productsByKeys',{
+            method: 'POST',
+            body: JSON.stringify(productKeys),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
         })
-        // console.log(previousCart);
-        setCart(previousCart);
+        .then(res=>res.json())//post method er res.send tekhe data pawa hocce
+        .then(data=>setCart(data))
+
+
+// {  ei part upore kora hoice  
+//        if(products.length){
+//             const previousCart = productKeys.map((existingKey) => {
+//             const product = products.find((pd) => pd.key == existingKey)
+//             // console.log(existingKey,saveCart[existingKey]);
+//             product.quantity = saveCart[existingKey]
+//             return product
+//             })
+//             // console.log(previousCart);
+//             setCart(previousCart);
+//         }}
     }, [])
     const handleAddProduct = (productPara) => {
         // console.log("clicked",productPara);

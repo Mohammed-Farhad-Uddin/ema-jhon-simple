@@ -28,14 +28,26 @@ const Review = () => {
         //cart
         const savedCart = getDatabaseCart()
         const productKeys=Object.keys(savedCart)
-        const cartProducts=productKeys.map((keyItem)=>{ 
-            //  savedCart[key]
-            const product=fakeData.find((pd)=>pd.key===keyItem);
-            product.quantity=savedCart[keyItem]
-            return product
+
+        fetch('http://localhost:5000/productsByKeys',{
+            method: 'POST',
+            body: JSON.stringify(productKeys),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
         })
-        setCart(cartProducts)
-        // console.log(cartProducts)
+        .then(res=>res.json())//post method er res.send tekhe data pawa hocce
+        .then(data=>setCart(data))
+
+    //      {nicher ei ta upore database tekhe kora hoice
+    //         const cartProducts=productKeys.map((keyItem)=>{ 
+    //         //  savedCart[key]
+    //         const product=fakeData.find((pd)=>pd.key===keyItem);
+    //         product.quantity=savedCart[keyItem]
+    //         return product
+    //     })
+    //     setCart(cartProducts)
+    //     // console.log(cartProducts)}
     },[])
 
     // let thankYou;
