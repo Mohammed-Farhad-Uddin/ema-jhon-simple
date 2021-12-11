@@ -85,7 +85,7 @@ const Login=()=> {
           if(isFieldValid){
             const newUserInfo={...user};
             newUserInfo[e.target.name]=e.target.value;
-            newUserInfo[e.target.name]=e.target.value;
+            // newUserInfo[e.target.name]=e.target.value;
             setUser(newUserInfo)
           }
         }

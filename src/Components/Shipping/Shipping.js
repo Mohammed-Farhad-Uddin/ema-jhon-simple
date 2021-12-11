@@ -2,13 +2,37 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { useContext } from 'react/cjs/react.development';
 import { UserContext } from '../../App';
-import "./Shipping.css"
+import { getDatabaseCart , processOrder } from '../../utilities/databaseManager';
+import "./Shipping.css";
+import { useHistory } from 'react-router-dom';
+
 
 const Shipping = () => {
     const [loggedInUser,setLoggedInUser] = useContext(UserContext)
-
+    const history=useHistory();
+    
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = (data) => {
+      const saveCart=getDatabaseCart();
+      const orderDetails={...loggedInUser,products:saveCart, shipment:data, orderTime:new Date()}
+      
+      fetch('http://localhost:5000/addOrder',{
+        method:"POST",
+        headers:{
+          'Content-Type':'Application/json'
+        },
+        body:JSON.stringify(orderDetails)
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        if(data){
+          processOrder()
+          alert("Your Order Placed Successfully")
+          history.push('/')
+        }
+      })
+
+    };
   
   
     return (

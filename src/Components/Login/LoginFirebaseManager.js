@@ -127,7 +127,7 @@ export const AsignInWithEmailAndPassword=(email,password)=>{
 const updateUserInfo=(name)=>{       
     const auth = getAuth();
     updateProfile(auth.currentUser, {
-      displayName: name
+      name: name
     }).then(() => {
       // Profile updated!
       console.log('Profile Updated')
