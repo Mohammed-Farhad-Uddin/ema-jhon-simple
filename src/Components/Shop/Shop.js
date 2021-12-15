@@ -10,12 +10,13 @@ const Shop = () => {
     // const first10 = fakeData.slice(0, 10);
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+    const [search,setSearch]=useState('')
 
     useEffect(()=>{
-        fetch('http://localhost:5000/products')
+        fetch('http://localhost:5000/products?search='+search)
         .then(res=>res.json())
         .then(data=>setProducts(data))
-    },[])
+    },[search])
 
     useEffect(() => {
         const saveCart = getDatabaseCart()
@@ -30,8 +31,6 @@ const Shop = () => {
         })
         .then(res=>res.json())//post method er res.send tekhe data pawa hocce
         .then(data=>setCart(data))
-
-
 // {  ei part upore kora hoice  
 //        if(products.length){
 //             const previousCart = productKeys.map((existingKey) => {
@@ -44,6 +43,13 @@ const Shop = () => {
 //             setCart(previousCart);
 //         }}
     }, [])
+
+
+    const handleSearch=(e)=>{
+            setSearch(e.target.value)
+    }
+
+
     const handleAddProduct = (productPara) => {
         // console.log("clicked",productPara);
         const toBeAddedKey = productPara.key
@@ -67,6 +73,7 @@ const Shop = () => {
     return (
         <div className="twin-container">
             <div className="product-container">
+                <input type="text" onChange={handleSearch} className="product-search" placeholder='Search Product' />
                 {
                     products.map((prod) => <Product key={prod.key} handleAddProduct={handleAddProduct} product={prod} showAddToCart={true}></Product>)
                 }

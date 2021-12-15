@@ -6,15 +6,8 @@ import { useHistory, useLocation } from 'react-router';
 import { handleGoogleSignIn, initializeLoginFramework , handleSignOut, handleFbSignIn, AcreateUserWithEmailAndPassword, AsignInWithEmailAndPassword, resetPassword} from './LoginFirebaseManager';
 
 
-
-
-
-
-
 const Login=()=> {
-  
-  
-  
+
   const[newUser,setNewUser]=useState(false)
   const[user,setUser]=useState({
     isSignIn:false,

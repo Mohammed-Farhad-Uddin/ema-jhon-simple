@@ -28,8 +28,20 @@ export const handleGoogleSignIn=()=>{
         photo:photoURL,
         success:true
       }
+      setUserToken()//module-53 vid-3
       return signInUser;
     }).catch((err)=>console.log(err))
+  }
+
+  const setUserToken=()=>{//module-53 vid-3
+    const auth = getAuth();
+    auth.currentUser.getIdToken(/* forceRefresh */ true)
+    .then(function(idToken) {
+      // Send token to your backend via HTTPS
+      sessionStorage.setItem("token",idToken)
+    }).catch(function(error) {
+      // Handle error
+    });
   }
 
 

@@ -7,3 +7,10 @@
     margin-left: 20px;
     margin-right: 5px;
 }
+.product-search{
+    padding: 5px;
+    position: relative;
+    left: 350px;
+    width: 300px;
+    margin-bottom: 10px;
+}
